@@ -20,6 +20,19 @@
 	
 		创建方法:create table user_operation(username varchar(20),operation text);
 
+----
+>为某个字段插入添加后续内容的Mysql语法    
+>主要需要使用到两个函数
+>
+>1. concat(string1,string2,…) --->string1,string2代表字符串,concat函数在连接字符串的时候，只要其中一个是NULL,那么将返回NULL
+>
+>2. concat_ws(分隔符,str1,str2,.....)--->string1,string2代表字符串,concat_ws 代表 concat with separator,第一个参数是其它参数的分隔符。分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其它参数。如果分隔符为 NULL，则结果为 NULL。函数会忽略任何分隔符参数后的 NULL 值。
+	
+	
+>	`update 表名 set 字段名=concat(字段名,string)`
+>	
+>	`update 表名 set 字段名=concat_ws(分割民,字段名,string)`
+
 ### 二、数据操作层接口说明
 
 	public interface UserDao {
@@ -51,6 +64,7 @@
 	1. dbPool -->数据库连接池，提高效率
 	2. dbUtil -->封装了jdbc代码，主要用在dbPool里面
 	3. Md5Util -->封装了MD5算法，用于将密码转换为非明文存放在数据库中
+	4. timeUtil -->主要用于获取与时间有关的参数
 
 ### 五、异常说明
 	1. OutOfRangeException -->用于数据库连接池,当需要填充的连接大于连接池最大数量时抛出
