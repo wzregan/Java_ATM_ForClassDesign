@@ -21,4 +21,8 @@ public class UserServerImpl implements UserServer {
 		return false;
 	}
 
+	public void saveMoney(User user, double money) {
+		
+	}
+
 }

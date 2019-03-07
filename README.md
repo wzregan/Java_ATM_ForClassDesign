@@ -30,6 +30,13 @@
 		public boolean userIsExist(String passwd);//注册时使用，判断该账号是否已经存在
 		
 	}
+
+---------------
+
+	public interface OperationDao {
+		public void OperationUpdate(String username,String OpeMessage);  //主要用于更新操作记录表
+	}
+
 ### 三、业务逻辑层接口说明
 
 	public interface UserServer {
@@ -37,6 +44,7 @@
 		public User querry(String username,String passwd); //查询
 		public boolean drawMoney(User user); //取钱，如果余额足够则取钱成功，如果余额不足取钱，则返回false
 		public boolean transfer(User from,User to); //转账，如果转账成功则取返回true，如果失败则返回false
+		public void saveMoney(User user,double money); //存钱
 	}
 
 ### 四、工具类说明
