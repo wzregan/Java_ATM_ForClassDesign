@@ -40,14 +40,16 @@
 		public void updatePasswd(String username,String newpasswd);  //修改密码时使用						  
 		public void updatebalance(String username,double balance);	 //更新余额时使用
 		public User querryMessage(String username,String passwd);    //查询时候使用
-		public boolean userIsExist(String passwd);//注册时使用，判断该账号是否已经存在
-		
+		public boolean userIsExist(String username);//注册时使用，判断该账号是否已经存在
+		public double queryBalanceByname(String name); //通过账号查询余额
+		public String ToRealName(String username); //通过账号查询真实名字
 	}
 
 ---------------
 
 	public interface OperationDao {
-		public void OperationUpdate(String username,String OpeMessage);  //主要用于更新操作记录表
+		public void OperationUpdate(String username,String OpeMessage); //主要用于更新操作记录表
+		public void InitOperation(String username); //用于用户刚刚注册时候初始化数据库表
 	}
 
 ### 三、业务逻辑层接口说明
@@ -55,8 +57,8 @@
 	public interface UserServer {
 		public boolean register(User user); //注册账号，如果注册成功返回true,如果注册失败,返回false
 		public User querry(String username,String passwd); //查询
-		public boolean drawMoney(User user); //取钱，如果余额足够则取钱成功，如果余额不足取钱，则返回false
-		public boolean transfer(User from,User to); //转账，如果转账成功则取返回true，如果失败则返回false
+		public boolean drawMoney(User user,double money); //取钱，如果余额足够则取钱成功，如果余额不足取钱，则返回false
+		public boolean transfer(User from,String to,double money); //转账，如果转账成功则取返回true，如果失败则返回false
 		public void saveMoney(User user,double money); //存钱
 	}
 

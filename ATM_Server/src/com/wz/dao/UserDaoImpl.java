@@ -93,8 +93,8 @@ public class UserDaoImpl implements UserDao {
 			{
 				realname=rs.getString(4);
 				balance=rs.getDouble(5);
+				user=User.CreateUser(username, passwd, realname, balance);
 			}
-			user=User.CreateUser(username, passwd, realname, balance);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,9 +124,75 @@ public class UserDaoImpl implements UserDao {
 			isExist=rs.next(); //若查询到内容，则存在，若没有查询到内容，则不存在
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				ps.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return isExist;
+	}
+	@Override
+	public double queryBalanceByname(String name) {
+		Connection con=dbpool.getConenction();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			
+			ps=con.prepareStatement("select balance from user where username=?");
+			ps.setString(1, name);
+			rs=ps.executeQuery();
+			if(rs.next())
+			{
+				return rs.getDouble(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				ps.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+
+		
+		return -100;
+	}
+	public String ToRealName(String username) {
+		Connection con=dbpool.getConenction();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			
+			ps=con.prepareStatement("select realname from user where username=?");
+			ps.setString(1, username);
+			rs=ps.executeQuery();
+			if(rs.next())
+			{
+				return rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				ps.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 }

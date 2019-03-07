@@ -12,6 +12,25 @@ public class OperationDaoImpl implements com.wz.Interface.OperationDao {
 	}
 
 	private dbPool db=new dbPool();
+	public void InitOperation(String username)
+	{
+		Connection con=db.getConenction();
+		PreparedStatement ps=null;
+		try {
+			ps=con.prepareStatement("insert into user_operation values(?,null)");
+			ps.setString(1, username);
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				ps.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public void OperationUpdate(String username, String OpeMessage) {
 		Connection con=db.getConenction();
 		PreparedStatement ps=null;
