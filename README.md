@@ -10,7 +10,7 @@
 		
 		记录每个用户账户密码以及余额
 		
-		创建方法:create table user(id int primary key auto_increment,username varchar(20),passwd varchar(20),balance double);		
+		创建方法:create table user(id int primary key auto_increment,username varchar(20),passwd varchar(50),realname varchar(20),balance double);		
 		
 	2. 表名:user_operation
 		

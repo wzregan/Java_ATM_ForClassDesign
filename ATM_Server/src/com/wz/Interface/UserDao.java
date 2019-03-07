@@ -7,6 +7,6 @@ public interface UserDao {
 	public void updatePasswd(String username,String newpasswd);  //修改密码时使用						  
 	public void updatebalance(String username,double balance);	 //更新余额时使用
 	public User querryMessage(String username,String passwd);    //查询时候使用
-	public boolean userIsExist(String passwd);//注册时使用，判断该账号是否已经存在
+	public boolean userIsExist(String username);//注册时使用，判断该账号是否已经存在
 	
 }
