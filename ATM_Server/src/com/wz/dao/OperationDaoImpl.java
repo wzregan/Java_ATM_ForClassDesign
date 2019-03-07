@@ -7,11 +7,9 @@ import java.sql.SQLException;
 import com.wz.tool.dbPool;
 
 public class OperationDaoImpl implements com.wz.Interface.OperationDao {
-	public static void main(String[] args) {
-		new OperationDaoImpl().OperationUpdate("admin", "save money");
-	}
+	private dbPool db=new dbPool(); //获取数据库连接池
 
-	private dbPool db=new dbPool();
+	//这个方法在注册的时候调用，会为账号初始化一个operation
 	public void InitOperation(String username)
 	{
 		Connection con=db.getConenction();
@@ -31,6 +29,8 @@ public class OperationDaoImpl implements com.wz.Interface.OperationDao {
 			}
 		}
 	}
+	
+	//将操作信息写入operation表中
 	public void OperationUpdate(String username, String OpeMessage) {
 		Connection con=db.getConenction();
 		PreparedStatement ps=null;

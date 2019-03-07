@@ -89,5 +89,14 @@ public class UserServerImpl implements UserServer {
 		
 	}
 
+	public boolean updatePasswd(User user, String newpasswd) {
+		if(dao.userIsExist(user.getUsername()))
+		{
+			dao.updatePasswd(user.getUsername(), newpasswd);
+			return true;
+		}
+		return false;
+	}
+
 	
 }
