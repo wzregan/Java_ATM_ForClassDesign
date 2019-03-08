@@ -16,7 +16,7 @@ public class UserServerImpl implements UserServer {
 			//向数据库中插入数据
 			dao.insert(user.getUsername(), user.getPasswd(), user.getRealname(), user.getBalance());
 			//更新操作记录表
-			OperationServerImpl.update(user, OperationServerImpl.REGISTER_OPERATION, 
+			OperationServerImpl.update(user.getUsername(), OperationServerImpl.REGISTER_OPERATION, 
 											 null, null, null);
 			return true;
 		}
@@ -28,71 +28,65 @@ public class UserServerImpl implements UserServer {
 	}
 
 	
-	public boolean drawMoney(User user,double hmoney) {
+	public boolean drawMoney(String username,double hmoney) {
 		//先获取当前余额
-		double current=user.getBalance();
+		double current=dao.queryBalanceByname(username);
 		//如果当前余额小于用户余额,直接返回false
 		if(current<hmoney)
 		{
 			return false;
 		}else {
-			//如果满足上述条件，就重新设置以下用户余额
-			user.setBalance(current-hmoney);
 			//并且更新user表
-			dao.updatebalance(user.getUsername(),user.getBalance());
+			dao.updatebalance(username,current-hmoney);
 			//并且更新operation记录表
-			OperationServerImpl.update(user, OperationServerImpl.DRAWMONEY_OPERATION, 
+			OperationServerImpl.update(username, OperationServerImpl.DRAWMONEY_OPERATION, 
 											 hmoney, null, null);
 		}
 		return true;
 	}
 
-	public boolean transfer(User from, String to,double hmoney) {
+	public boolean transfer(String username, String to,double hmoney) {
 		//得到当前余额
-		double current=from.getBalance();
+		double current=dao.queryBalanceByname(username);
 		//进行判断，如果当前余额小于转账余额或者被转账的账号不存在或者被转账的账号就是当前账号，那么就直接返回false
-		if(current<hmoney || !dao.userIsExist(to) || from.getUsername().equals(to))
+		if(current<hmoney || !dao.userIsExist(to) || username.equals(to))
 		{
 			return false;
 		}else {
 			//如果上述条件均满足
 			
-			//更新当前user的余额
-			from.setBalance(current-hmoney);
 			//更新user表
-			dao.updatebalance(from.getUsername(),from.getBalance());
+			dao.updatebalance(username,current-hmoney);
 			
 			dao.updatebalance(to, dao.queryBalanceByname(to)+hmoney);
-			//更新operation记录表，这里使用了updatebalance的重载方法，因为无法获得账号to的User对象
-			OperationServerImpl.update(from, OperationServerImpl.TRANSFER_OPERATION, 
+			//更新operation记录表，因为无法获得账号to的User对象
+			OperationServerImpl.update(username, OperationServerImpl.TRANSFER_OPERATION, 
 											 hmoney, to, null); //此处是更新当前user对象的operation记录
 			
 			OperationServerImpl.update(to, OperationServerImpl.GETMONEY_OPERATION, 
-					 hmoney, null, from.getUsername()); //此处是更新被转账的user的operation记录
+					 hmoney, null,username); //此处是更新被转账的user的operation记录
 			return true;
 		}
 		
 	}
 
-	public void saveMoney(User user, double money) {
-		if(dao.userIsExist(user.getUsername()))
+	public void saveMoney(String username, double money) {
+		if(dao.userIsExist(username))
 		{	
-			//更新user的余额
-			user.setBalance(user.getBalance()+money);
 			//更新user表
-			dao.updatebalance(user.getUsername(), user.getBalance());
+			dao.updatebalance(username, dao.queryBalanceByname(username)+money);
 			//更新operation记录表
-			OperationServerImpl.update(user, OperationServerImpl.SAVEMONEY_OPERATION, user.getBalance(), null, null);
+			OperationServerImpl.update(username, OperationServerImpl.SAVEMONEY_OPERATION, money, null, null);
 		}
 		
 	
 		
 	}
 
-	public boolean updatePasswd(User user, String newpasswd) {
-		if(dao.userIsExist(user.getUsername()))
+	public boolean updatePasswd(String username, String newpasswd) {
+		if(dao.userIsExist(username))
 		{
-			dao.updatePasswd(user.getUsername(), newpasswd);
+			dao.updatePasswd(username, newpasswd);
 			return true;
 		}
 		return false;

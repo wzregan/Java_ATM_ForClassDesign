@@ -20,39 +20,6 @@ public class OperationServerImpl {
 	//参数3:若发生钱的变化，则需要填写该参数
 	//参数4:若转账，则需要填写转账给谁
 	//参数4:若收到转账，则需要填写该参数
-	public static void update(User user,Integer Operation,Double balance,String toname,String from)
-	{
-		toname=userdao.ToRealName(toname);
-		from=userdao.ToRealName(from);
-		String mes=null;
-		switch(Operation)
-		{
-		case REGISTER_OPERATION:
-			dao.InitOperation(user.getUsername());
-			mes=timeUtil.getTime()+" : "+"您注册了账号，欢迎您使用本银行系统";
-			dao.OperationUpdate(user.getUsername(),mes);
-			break;
-		case DRAWMONEY_OPERATION:
-			mes=timeUtil.getTime()+" : "+"您取出了"+balance+"元，余额还剩"+user.getBalance()+"元";
-			dao.OperationUpdate(user.getUsername(),mes);
-			break;
-		case TRANSFER_OPERATION:
-			mes=timeUtil.getTime()+" : "+"您向"+toname+"转账了"+balance+"元"+"，余额还剩"+user.getBalance()+"元";
-			dao.OperationUpdate(user.getUsername(),mes);
-			break;
-		case SAVEMONEY_OPERATION:
-			mes=timeUtil.getTime()+" : "+"您存入了"+balance+"元"+"，余额还剩"+user.getBalance()+"元";
-			dao.OperationUpdate(user.getUsername(),mes);
-			break;
-		case GETMONEY_OPERATION:
-			mes=timeUtil.getTime()+" : "+from+"向您转账了"+balance+"元"+"，余额还剩"+user.getBalance()+"元";
-			dao.OperationUpdate(user.getUsername(),mes);
-			break;
-		}
-		
-	}
-	
-	//为了方便后续的使用，这里重载了一个update方法
 	public static void update(String username,Integer Operation,Double balance,String toname,String from)
 	{
 		toname=userdao.ToRealName(toname);

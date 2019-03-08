@@ -6,12 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Properties;
+
+import com.wz.handle.KeyHandle;
 
 //直接让父类继承Runable接口，待会要在run方法里实现accpet
 public class NetServer implements Runnable{
@@ -44,6 +47,7 @@ public class NetServer implements Runnable{
 // 用来监听各个客服端的事件方法
 	public void server()
 	{
+		SelectionKey key=null;
 		while(true)
 		{
 			try {
@@ -53,8 +57,8 @@ public class NetServer implements Runnable{
 					Iterator<SelectionKey> iterator=selector.selectedKeys().iterator();
 					while(iterator.hasNext())
 					{
-						SelectionKey key=iterator.next();
-						keyhandle.handle(key);
+						key=iterator.next();
+						keyhandle.handle(key); //处理SelectionKey
 						iterator.remove();
 					}
 				}
@@ -81,35 +85,15 @@ public class NetServer implements Runnable{
 				//这里的同步块，与server中的同步块相对应
 				synchronized(this) {
 					selector.wakeup(); //此处需要唤醒server()方法中的select()，否则的话可能会发生死锁
-					socketchannel.register(selector,SelectionKey.OP_READ|SelectionKey.OP_WRITE); //对这个通道注册读和写事件
+					socketchannel.register(selector,SelectionKey.OP_READ); //对这个通道注册读和写事件
+					System.out.println("接收到连接"); //测试代码
 				}
 				
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 		}
-	}
-	
-//创建一个内部类,专门用来处理SelectionKey的处理器 --->
-	private class KeyHandle
-	{
-		public KeyHandle()
-		{
-			
-		}
-		
-		public void handle(SelectionKey key) {
-			if(key.isReadable())
-			{
-				
-			}
-			
-			if(key.isWritable())
-			{
-				
-			}
-		}
-		
 	}
 }
 
