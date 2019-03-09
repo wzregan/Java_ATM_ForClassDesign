@@ -28,6 +28,7 @@ public class EventHandle {
 	{
 		String callback=null; //初始化反馈值
 		String split[]=sign.split(REGEX); //将信号进行处理
+		System.out.println(sign);
 		switch(split[0])
 		{
 			case EVENT_REGISTER://注册事件
@@ -98,6 +99,8 @@ public class EventHandle {
 		userServer.saveMoney(username, money);
 		return "SAVEMONEY"+REGEX+"OK";
 	}
+	
+	//反馈信号方法
 	public void CallBack(SelectionKey Key,String callback)
 	{
 		SocketChannel socketChannel=(SocketChannel)Key.channel();

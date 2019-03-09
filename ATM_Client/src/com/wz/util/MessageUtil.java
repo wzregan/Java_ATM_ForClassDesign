@@ -4,7 +4,7 @@ public class MessageUtil {
 	//client.sendMessage("REGISTER:#:#text03:#:#woainma..:#:#汪子衣:#:#95636");
 	//client.sendMessage("LOGIN:#:#text0008:#:#woainima..");
 	//client.sendMessage("SAVAMONEY:#:#text03:#:#85615");
-	private final static String REGEX=":#:#"; //分隔符
+	final public  static  String REGEX=":#:#"; //分隔符
 	public static String loginSgin(String username,String passwd) //得到登陆信号
 	{
 		return "LOGIN"+REGEX+username+REGEX+passwd;

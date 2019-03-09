@@ -12,6 +12,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Properties;
 
+import com.wz.handle.ErrorHandle;
 import com.wz.handle.KeyHandle;
 import com.wz.util.MessageUtil;
 
@@ -23,24 +24,6 @@ public class NetClient implements Runnable {
 	private String HOST; // 主机名
 	private Properties pro; //配置文件加载器
 	private KeyHandle keyhandle; //SelectionKey处理器
-	public static void main(String[] args) throws InterruptedException {
-		NetClient client=new NetClient();
-	/*	client.connect();
-		client.sendMessage(MessageUtil.registerSign("text_wz01", "woainima..", "王正", 2000));
-		client.sendMessage(MessageUtil.registerSign("text_wz02", "woainima..", "魏崇浩", 2000));
-		client.sendMessage(MessageUtil.saveMoneySign("text_wz01",500));
-		client.sendMessage(MessageUtil.transferSign("text_wz01","text_wz02", 800));
-		client.sendMessage(MessageUtil.drawmoneySign("text_wz02", 300));
-		client.sendMessage(MessageUtil.updatepasswdSign("text_wz02", "text1"));
-		client.sendMessage(MessageUtil.loginSgin("text_wz02", "text"));
-		client.sendMessage(MessageUtil.loginSgin("text_wz02", "text1"));*/
-		new Thread(new Runnable() {
-			
-			public void run() {
-				client.server();
-			}
-		}).start();
-	}
 	public NetClient(){
 		try {
 			pro=new Properties(); //初始化资源加载器
@@ -85,15 +68,13 @@ public class NetClient implements Runnable {
 	
 	//因为连接是是阻塞式的，所以要开启子线程进行连接
 	public void run() {
-		try {
-			socketChannel.connect(new InetSocketAddress(HOST, PORT)); //阻塞式进行连接
-			socketChannel.configureBlocking(false);//对通道设置为非阻塞
-			socketChannel.register(selector, SelectionKey.OP_READ|SelectionKey.OP_WRITE);//对通道进行注册
-		} catch (ClosedChannelException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
+			try {
+				socketChannel.connect(new InetSocketAddress(HOST, PORT)); //阻塞式进行连接
+				socketChannel.configureBlocking(false);
+				socketChannel.register(selector, SelectionKey.OP_READ|SelectionKey.OP_WRITE);//对通道进行注册
+			} catch (IOException e) {
+				ErrorHandle.sendMessage(ErrorHandle.ConnectError); //处理服务器连接失败问题
+			}//对通道设置为非阻塞
 	}
 	
 	
