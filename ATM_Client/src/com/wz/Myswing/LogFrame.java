@@ -68,6 +68,12 @@ public class LogFrame extends JFrame implements ActionListener{
 		passwaPanel.passwdField.setText(str);
 	}
 	
+	public void setUserFiled(String str)
+	{
+		userpanle.nameField.setText(str);
+	}
+	
+	
 	//为网格布局填充空行
 	public  void addBlankLine(int n)
 	{

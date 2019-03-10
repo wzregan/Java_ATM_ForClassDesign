@@ -73,10 +73,10 @@ public class EventHandle {
 	public String Register(String username, String passwd, String realname,double balance)
 	{
 		User user=User.CreateUser(username, passwd, realname, balance);
-		if(user!=null)
+		boolean result=userServer.register(user);
+		if(result)
 		{
-			userServer.register(user);
-			return "REGISTER"+REGEX+"OK";
+			return "REGISTER"+REGEX+"YES"+REGEX+user.getUsername()+REGEX+user.getPasswd()+REGEX+user.getRealname()+REGEX+user.getBalance();
 		}else {
 			return "REGISTER"+REGEX+"NO";
 		}
