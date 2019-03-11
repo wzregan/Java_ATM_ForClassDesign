@@ -5,6 +5,7 @@ import java.awt.TextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import com.wz.Myswing.MesFrame;
 import com.wz.bean.User;
 import com.wz.util.FrameHolder;
 import com.wz.util.MessageUtil;
@@ -26,6 +27,8 @@ public class callbackHandle {
 			}else if(split[1].equals("YES")){
 				JOptionPane.showMessageDialog(FrameHolder.logFrame, "登陆成功", "提示", JOptionPane.OK_OPTION);
 				User user=User.CreateUser(split[2], split[3], split[4], Double.parseDouble(split[5]));
+				FrameHolder.logFrame.setVisible(false);
+				new MesFrame(user).setVisible(true);
 			}
 			break;
 		case "REGISTER":
@@ -36,6 +39,7 @@ public class callbackHandle {
 				{
 					FrameHolder.RegisFrame.setVisible(false);
 					User user=User.CreateUser(split[2], split[3], split[4], Double.parseDouble(split[5]));
+					new MesFrame(user).setVisible(true);
 				}else if(i==2)
 				{
 					FrameHolder.RegisFrame.setVisible(false);

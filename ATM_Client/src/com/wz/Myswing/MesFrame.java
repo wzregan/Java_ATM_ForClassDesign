@@ -36,7 +36,6 @@ public class MesFrame extends JFrame{
 		fp=new buttonPanel();
 		setSize(500, 300);
 		init();
-		setVisible(true);
 	}
 	
 	public void init()
@@ -48,13 +47,21 @@ public class MesFrame extends JFrame{
 		setLayout(new GridLayout(1, 2));
 		add(mespanel);
 		add(fp);
-		
+		mespanel.username.setText(user.getUsername());
+		mespanel.realname.setText(user.getRealname());
+		mespanel.balance.setText(user.getBalance()+"");
 	}
+	
+	public void setuserBalance(double money)
+	{
+		mespanel.balance.setText(money+"");
+	}
+	
 }
 class MessagePanel extends JPanel{
-	public JLabel username=new JLabel("admin");
-	public JLabel realname=new JLabel("ÍõÕý");
-	public JLabel balance=new JLabel("86.6");
+	public JLabel username=new JLabel();
+	public JLabel realname=new JLabel();
+	public JLabel balance=new JLabel();
 		
 	public MessagePanel()
 	{	
