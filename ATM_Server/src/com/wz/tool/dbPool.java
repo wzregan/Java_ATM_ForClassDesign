@@ -89,7 +89,7 @@ public class dbPool {
 	{
 
 		//通过动态代理，将Connection中的close方法进行优化
-		Connection con=dbUtil.CreateConnection();
+		final Connection con=dbUtil.CreateConnection();
 		Connection proCon=(Connection)Proxy.newProxyInstance(con.getClass().getClassLoader(),con.getClass().getInterfaces(),new InvocationHandler() {
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 				if(method.getName().equals("close")) {

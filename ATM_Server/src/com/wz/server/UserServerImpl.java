@@ -92,5 +92,10 @@ public class UserServerImpl implements UserServer {
 		return false;
 	}
 
+	public double querryBalance(String name) {
+		
+		return dao.queryBalanceByname(name);
+	}
+
 	
 }

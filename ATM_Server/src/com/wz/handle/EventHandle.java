@@ -97,7 +97,7 @@ public class EventHandle {
 	public String save(String username,double money)
 	{
 		userServer.saveMoney(username, money);
-		return "SAVEMONEY"+REGEX+"OK";
+		return "SAVEMONEY"+REGEX+"OK"+REGEX+userServer.querryBalance(username);
 	}
 	
 	//反馈信号方法
@@ -124,8 +124,6 @@ public class EventHandle {
 		}else {
 			return "UPDATEPASSWD"+REGEX+"NO";
 		}
-		
-		
 	}
 	
 	//转账事件
@@ -140,7 +138,5 @@ public class EventHandle {
 			return "TRANSFER"+REGEX+"NO";
 		}
 	}
-	
-	
 	
 }

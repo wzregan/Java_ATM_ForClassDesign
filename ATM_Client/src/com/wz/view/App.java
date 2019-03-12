@@ -14,7 +14,6 @@ public class App {
 		new Thread(new Runnable() {
 			public void run() {
 				ClientUtil.client.server();
-				
 			}
 		}).start();
 	}

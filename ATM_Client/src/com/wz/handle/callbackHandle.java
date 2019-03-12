@@ -51,6 +51,15 @@ public class callbackHandle {
 			}
 			break;
 		case "SAVEMONEY": 
+			if(split[1].equals("OK")){
+				FrameHolder.sMoneyFrame.setVisible(false);
+				FrameHolder.sMoneyFrame.clear();
+				FrameHolder.mesFrame.setuserBalance(Double.parseDouble(split[2]));
+				JOptionPane.showMessageDialog(FrameHolder.sMoneyFrame, "存钱成功！", "提示", JOptionPane.OK_OPTION);
+			}else {
+				JOptionPane.showMessageDialog(FrameHolder.sMoneyFrame, "存钱失败，请检查网络连接", "提示", JOptionPane.OK_OPTION);
+			}
+			
 			break;
 		case "TRANSFER":
 			break;

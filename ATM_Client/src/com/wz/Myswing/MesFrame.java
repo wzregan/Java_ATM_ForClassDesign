@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import com.wz.bean.User;
+import com.wz.util.FrameHolder;
 
 public class MesFrame extends JFrame{
 	public static void main(String[] args) {
@@ -29,8 +30,23 @@ public class MesFrame extends JFrame{
 	private User user;
 	private MessagePanel mespanel;
 	private buttonPanel fp;
+	
+	private MouseAdapter mouseadapate=new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			JLabel lable=(JLabel) e.getSource();
+			System.out.println(lable.toString());
+			if(lable.getText().equals("¥Ê«Æ"))
+			{
+				
+				saveMoney();
+			}
+			
+		};
+	};
+	
 	public MesFrame(User user)
 	{
+		FrameHolder.mesFrame=this;
 		this.user=user;
 		mespanel=new MessagePanel();
 		fp=new buttonPanel();
@@ -50,6 +66,7 @@ public class MesFrame extends JFrame{
 		mespanel.username.setText(user.getUsername());
 		mespanel.realname.setText(user.getRealname());
 		mespanel.balance.setText(user.getBalance()+"");
+		fp.savemoney.addMouseListener(mouseadapate);
 	}
 	
 	public void setuserBalance(double money)
@@ -57,7 +74,20 @@ public class MesFrame extends JFrame{
 		mespanel.balance.setText(money+"");
 	}
 	
+	public void saveMoney()
+	{
+		if(FrameHolder.sMoneyFrame==null){
+			new saveMoneyFrame(user).setVisible(true);;
+		}else
+		{
+			FrameHolder.sMoneyFrame.setVisible(true);
+		}
+	}
+	
 }
+
+
+
 class MessagePanel extends JPanel{
 	public JLabel username=new JLabel();
 	public JLabel realname=new JLabel();
