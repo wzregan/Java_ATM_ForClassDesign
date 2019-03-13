@@ -27,34 +27,24 @@ public class MesFrame extends JFrame{
 	public static void main(String[] args) {
 		new MesFrame(User.CreateUser("admin", "woainima..", "王正", 8523.3));
 	}
-	private User user;
-	private MessagePanel mespanel;
-	private buttonPanel fp;
 	
-	private MouseAdapter mouseadapate=new MouseAdapter() {
-		public void mouseClicked(MouseEvent e) {
-			JLabel lable=(JLabel) e.getSource();
-			System.out.println(lable.toString());
-			if(lable.getText().equals("存钱"))
-			{
-				
-				saveMoney();
-			}
-			
-		};
-	};
-	
+	private User user; //需要展示的用户
+	private MessagePanel mespanel; //展示信息面板
+	private buttonPanel fp; //功能按钮面板
+	private MouseAdapter mouseadapate; //鼠标适配器
 	public MesFrame(User user)
 	{
-		FrameHolder.mesFrame=this;
-		this.user=user;
+		FrameHolder.mesFrame=this; //将该对象加入hoder
+		this.user=user; 
 		mespanel=new MessagePanel();
 		fp=new buttonPanel();
 		setSize(500, 300);
+		InitMouseAdapter();
 		init();
 	}
 	
-	public void init()
+	//初始化方法
+	private void init()
 	{
 		setTitle("尊敬的"+user.getRealname()+",欢迎您使用本系统");
 		Dimension dimension=Toolkit.getDefaultToolkit().getScreenSize(); //得到屏幕的大小
@@ -63,18 +53,60 @@ public class MesFrame extends JFrame{
 		setLayout(new GridLayout(1, 2));
 		add(mespanel);
 		add(fp);
+
+		//将信息进行展示
 		mespanel.username.setText(user.getUsername());
 		mespanel.realname.setText(user.getRealname());
 		mespanel.balance.setText(user.getBalance()+"");
+		
+		//添加监听器
 		fp.savemoney.addMouseListener(mouseadapate);
+		fp.drawmoney.addMouseListener(mouseadapate);
+		fp.transfer.addMouseListener(mouseadapate);
+		fp.querry.addMouseListener(mouseadapate);
 	}
 	
+	
+	
+	
+	//设置暂时面板的余额
 	public void setuserBalance(double money)
 	{
 		mespanel.balance.setText(money+"");
 	}
 	
-	public void saveMoney()
+	//初始化鼠标适配器的方法
+	private void InitMouseAdapter() 
+	{
+		 mouseadapate=new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				JLabel lable=(JLabel) e.getSource();
+				System.out.println(lable.toString());
+				switch(lable.getText())
+				{
+					case "存钱":{
+						saveMoney();
+						break;
+					}
+					case "查询":{
+						querryHistory();
+						break;
+					}
+					case "取钱":{
+						drawMoney();
+					}
+					case "转账":{
+						transfer();
+						break;
+					}
+					
+				}
+			};
+		}; 
+	}
+	
+	//发送存钱请求的方法
+	private void saveMoney()
 	{
 		if(FrameHolder.sMoneyFrame==null){
 			new saveMoneyFrame(user).setVisible(true);;
@@ -84,9 +116,25 @@ public class MesFrame extends JFrame{
 		}
 	}
 	
+	//发送查看历史记录请求的方法
+	private void querryHistory()
+	{
+		
+	}
+	
+	//发送取钱请求的方法
+	private void drawMoney()
+	{
+		
+	}
+	
+	//发送转账请求的方法
+	private void transfer()
+	{
+		
+	}
+	
 }
-
-
 
 class MessagePanel extends JPanel{
 	public JLabel username=new JLabel();
