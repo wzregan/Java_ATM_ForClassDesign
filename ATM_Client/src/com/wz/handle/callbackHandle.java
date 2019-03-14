@@ -61,9 +61,25 @@ public class callbackHandle {
 			}
 			
 			break;
-		case "TRANSFER":
-			break;
 		case "DRAWMONEY":
+			if(split[1].equals("OK")){
+				FrameHolder.drawmoneyframe.setVisible(false);
+				FrameHolder.drawmoneyframe.clear();
+				FrameHolder.mesFrame.setuserBalance(Double.parseDouble(split[2]));
+				JOptionPane.showMessageDialog(FrameHolder.sMoneyFrame, "存钱成功！", "提示", JOptionPane.OK_OPTION);
+			}else {
+				JOptionPane.showMessageDialog(FrameHolder.drawmoneyframe, "取钱失败，请确定银行账户余额是否充足", "提示", JOptionPane.OK_OPTION);
+			}
+			break;
+		case "TRANSFER":
+			if(split[1].equals("OK")){
+				FrameHolder.transferframe.setVisible(false);
+				FrameHolder.transferframe.clear();
+				FrameHolder.mesFrame.setuserBalance(Double.parseDouble(split[2]));
+				JOptionPane.showMessageDialog(FrameHolder.sMoneyFrame, "转账成功！", "提示", JOptionPane.OK_OPTION);
+			}else {
+				JOptionPane.showMessageDialog(FrameHolder.drawmoneyframe, "转账失败，请确定用户姓名是否正确或您的账户余额是否充足", "提示", JOptionPane.OK_OPTION);
+			}
 			break;
 		case "UPDATEPASSWD": 
 			break;

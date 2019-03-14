@@ -94,6 +94,7 @@ public class MesFrame extends JFrame{
 					}
 					case "取钱":{
 						drawMoney();
+						break;
 					}
 					case "转账":{
 						transfer();
@@ -120,18 +121,29 @@ public class MesFrame extends JFrame{
 	private void querryHistory()
 	{
 		
+		
 	}
 	
 	//发送取钱请求的方法
 	private void drawMoney()
 	{
-		
+		if(FrameHolder.drawmoneyframe==null){
+			new drawMoneyFrame(user).setVisible(true);;
+		}else
+		{
+			FrameHolder.drawmoneyframe.setVisible(true);
+		}
 	}
 	
 	//发送转账请求的方法
 	private void transfer()
 	{
-		
+		if(FrameHolder.transferframe==null){
+			new transferFrame(user).setVisible(true);;
+		}else
+		{
+			FrameHolder.transferframe.setVisible(true);
+		}
 	}
 	
 }

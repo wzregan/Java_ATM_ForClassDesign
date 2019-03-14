@@ -105,6 +105,7 @@ public class drawMoneyFrame extends JFrame implements ActionListener{
 				passwordField.setText("");
 				return;
 			}
+			ClientUtil.client.sendMessage(MessageUtil.drawmoneySign(user.getUsername(),Double.parseDouble(textField.getValue()+"")));
 			
 		}
 	}

@@ -64,7 +64,7 @@ public class EventHandle {
 		boolean result=userServer.drawMoney(username, money);
 		if(result)
 		{
-			return "DRAWMONEY"+REGEX+"YES";
+			return "DRAWMONEY"+REGEX+"OK"+REGEX+userServer.querryBalance(username);
 		}else {
 			return "DRAWMONEY"+REGEX+"NO";
 		}
@@ -133,7 +133,7 @@ public class EventHandle {
 		boolean result=userServer.transfer(from, to, money);
 		if(result)
 		{
-			return "TRANSFER"+REGEX+"OK";
+			return "TRANSFER"+REGEX+"OK"+REGEX+userServer.querryBalance(from);
 		}else {
 			return "TRANSFER"+REGEX+"NO";
 		}
