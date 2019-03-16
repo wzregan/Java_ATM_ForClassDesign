@@ -7,6 +7,7 @@ import java.awt.Label;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.NumberFormat;
@@ -35,14 +36,18 @@ public class saveMoneyFrame extends JFrame implements ActionListener{
 	private JPasswordField passwordField;	//输入密码的密码框
 	private JButton button; //确定按钮
 	private User user; //当前用户
+	private WindowAdapter adapate=new WindowAdapter() {
+		public void windowClosing(java.awt.event.WindowEvent e) {
+			clear();
+		}; 
+	};
+	
 	
 	public saveMoneyFrame(User user) {
 		FrameHolder.sMoneyFrame=this; //添加到FrameHolder中
 		this.user=user;  //初始化user
-
 		init();
 	}
-	
 	private void init()
 	{
 		textField= new JFormattedTextField(NumberFormat.getInstance()); //用Nub初始化格式化框
@@ -70,13 +75,14 @@ public class saveMoneyFrame extends JFrame implements ActionListener{
 		box2.add(Box.createHorizontalStrut(50)); //添加填充物
 		add(box2);//将这个容器添加进网格布局中
 		addBlankLine(1); //添加空行
-
 		//在把按钮放到普通的面板中
 		JPanel panel=new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		panel.add(button);
 		add(panel);
 		button.addActionListener(this);
+		//添加窗口监听器
+		addWindowListener(adapate);
 	}
 	
 	//添加空行的方法

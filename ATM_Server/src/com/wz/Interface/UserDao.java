@@ -10,4 +10,5 @@ public interface UserDao {
 	public boolean userIsExist(String username);//注册时使用，判断该账号是否已经存在
 	public double queryBalanceByname(String name); //通过账号查询余额
 	public String ToRealName(String username); //通过账号查询真实名字
+	public String getOperation(String username); //得到账号的操作记录
 }

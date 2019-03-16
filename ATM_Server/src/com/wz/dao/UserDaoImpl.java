@@ -194,5 +194,38 @@ public class UserDaoImpl implements UserDao {
 		}
 		return null;
 	}
+	
+	public String getOperation(String username) {
+		Connection connection=dbpool.getConenction();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+			try {
+				ps=connection.prepareStatement("select * from user_operation where username=?");
+				ps.setString(1, username);
+				rs=ps.executeQuery();
+				if (rs.next()) {
+					return rs.getString(2);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					rs.close();
+					ps.close();
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			
+			}
+	
+			
+		
+			
+		
+		return null;
+	}
+	
+	
 
 }

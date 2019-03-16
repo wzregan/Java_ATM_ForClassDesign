@@ -24,20 +24,19 @@ public class OperationFrame extends JFrame{
 	{
 		FrameHolder.operationframe=this;
 		init();
-		initTable(new String[][] {{"2016-3-13 12:23  张凯向您转账856元"}});
 	}
 	public void init()
 	{
 		/*整个Frame框架的初始化*/
 		setLayout(null);
-		setSize(350,410);
+		setSize(500,410);
 		Dimension dimension=Toolkit.getDefaultToolkit().getScreenSize(); //得到屏幕的大小
 		setLocation((int)(dimension.getWidth()/2.5), (int)(dimension.getHeight()/3.5)); //让窗口放置在屏幕中央
 		/*表格的初始化*/
 		model=new DefaultTableModel() {	public boolean isCellEditable(int row, int column) {return false;} }; //初始化表格模型
 		table=new JTable(model); //初始化表格
 		JScrollPane tablePanel=new JScrollPane(table); //将表格加入到scrollpanel中
-		tablePanel.setBounds(10, 10, 315, 340); //设置位置以及大小
+		tablePanel.setBounds(10, 10, 465, 340); //设置位置以及大小
 		getContentPane().add(tablePanel);  //将表格添加到容器中
 	}
 	public void initTable(String[][] message)

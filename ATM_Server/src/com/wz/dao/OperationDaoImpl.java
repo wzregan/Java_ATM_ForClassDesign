@@ -35,7 +35,7 @@ public class OperationDaoImpl implements com.wz.Interface.OperationDao {
 		Connection con=db.getConenction();
 		PreparedStatement ps=null;
 		try {
-			ps=con.prepareStatement("update user_operation set operation=concat_ws('|',operation,?) where username=?");
+			ps=con.prepareStatement("update user_operation set operation=concat_ws(';#;#',operation,?) where username=?");
 			ps.setString(2, username);
 			ps.setString(1, OpeMessage);
 			ps.execute();

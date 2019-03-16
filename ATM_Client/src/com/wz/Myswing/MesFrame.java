@@ -21,7 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import com.wz.bean.User;
+import com.wz.util.ClientUtil;
 import com.wz.util.FrameHolder;
+import com.wz.util.MessageUtil;
 
 public class MesFrame extends JFrame{
 	public static void main(String[] args) {
@@ -55,6 +57,7 @@ public class MesFrame extends JFrame{
 		add(fp);
 
 		//将信息进行展示
+		
 		mespanel.username.setText(user.getUsername());
 		mespanel.realname.setText(user.getRealname());
 		mespanel.balance.setText(user.getBalance()+"");
@@ -81,7 +84,6 @@ public class MesFrame extends JFrame{
 		 mouseadapate=new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				JLabel lable=(JLabel) e.getSource();
-				System.out.println(lable.toString());
 				switch(lable.getText())
 				{
 					case "存钱":{
@@ -120,8 +122,7 @@ public class MesFrame extends JFrame{
 	//发送查看历史记录请求的方法
 	private void querryHistory()
 	{
-		
-		
+		ClientUtil.client.sendMessage(MessageUtil.querryOperationSign(user.getUsername()));
 	}
 	
 	//发送取钱请求的方法

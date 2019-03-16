@@ -7,6 +7,7 @@ import java.awt.Label;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.NumberFormat;
@@ -41,7 +42,11 @@ public class drawMoneyFrame extends JFrame implements ActionListener{
 		setSize(250, 300);
 		init();
 	}
-	
+	private WindowAdapter adapate=new WindowAdapter() {
+		public void windowClosing(java.awt.event.WindowEvent e) {
+			clear();
+		}; 
+	};
 	private void init()
 	{
 		//初始化基本组件
@@ -83,6 +88,9 @@ public class drawMoneyFrame extends JFrame implements ActionListener{
 		panel.add(button);
 		add(panel);
 		button.addActionListener(this);
+		//添加窗口监听器
+		addWindowListener(adapate);
+		
 	}
 	
 	//添加空行的方法

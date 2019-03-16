@@ -10,4 +10,5 @@ public interface UserServer {
 	public boolean transfer(String username,String to,double money); //转账，如果转账成功则取返回true，如果失败则返回false
 	public void saveMoney(String username,double money); //存钱
 	public boolean updatePasswd(String username,String newpasswd);//更新密码
+	public String getOperation(String username);
 }

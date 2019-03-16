@@ -7,18 +7,20 @@ import java.nio.channels.SocketChannel;
 import com.wz.Interface.UserServer;
 import com.wz.bean.User;
 import com.wz.network.NetServer;
+import com.wz.server.OperationServerImpl;
 import com.wz.server.UserServerImpl;
 
 /*事件处理器类*/
 public class EventHandle {
 	private UserServer userServer;
-	private NetServer netServer;
+	private OperationServerImpl operationserver=new OperationServerImpl();
 	private final String EVENT_REGISTER="REGISTER";
 	private final String EVENT_LOGIN="LOGIN";
 	private final String EVENT_SAVEMONEY="SAVEMONEY";
 	private final String EVENT_TRANSFER="TRANSFER";
 	private final String EVENT_UPDATEPASSWD="UPDATEPASSWD";
 	private final String EVENT_DRAWMONEY="DRAWMONEY";
+	private final String EVENT_OPERATION="OPERATION";
 	private final String REGEX=":#:#";
 	public EventHandle()
 	{
@@ -36,6 +38,7 @@ public class EventHandle {
 				CallBack(key, callback);
 				break;
 			case EVENT_LOGIN://登陆事件
+				key.attach(split[1]);
 				callback=login(split[1],split[2]);
 				CallBack(key,callback);
 				break;
@@ -53,6 +56,10 @@ public class EventHandle {
 				break;
 			case EVENT_DRAWMONEY://取钱事件
 				callback=drawmoney(split[1],Double.parseDouble(split[2]));
+				CallBack(key,callback);
+				break;
+			case EVENT_OPERATION://取钱事件
+				callback=querryOperation(split[1]);
 				CallBack(key,callback);
 				break;
 		}
@@ -137,6 +144,15 @@ public class EventHandle {
 		}else {
 			return "TRANSFER"+REGEX+"NO";
 		}
+	}
+	
+	//查询操作记录事件
+	
+	public String querryOperation(String username)
+	{
+		String operaiton=userServer.getOperation(username);
+		return "OPERATION"+REGEX+"OK"+REGEX+operaiton;
+		
 	}
 	
 }

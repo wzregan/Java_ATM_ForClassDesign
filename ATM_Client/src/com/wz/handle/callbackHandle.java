@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.wz.Myswing.MesFrame;
+import com.wz.Myswing.OperationFrame;
 import com.wz.bean.User;
 import com.wz.util.FrameHolder;
+import com.wz.util.Md5Util;
 import com.wz.util.MessageUtil;
 
 public class callbackHandle {
@@ -17,7 +19,6 @@ public class callbackHandle {
 
 	public void handle(String sign) {
 		String[] split=sign.split(MessageUtil.REGEX);
-		System.out.println(sign);
 		switch(split[0])
 		{
 		case "LOGIN":
@@ -39,6 +40,7 @@ public class callbackHandle {
 				{
 					FrameHolder.RegisFrame.setVisible(false);
 					User user=User.CreateUser(split[2], split[3], split[4], Double.parseDouble(split[5]));
+					user.setPasswd(Md5Util.ToMd5code(user.getPasswd()));
 					new MesFrame(user).setVisible(true);
 				}else if(i==2)
 				{
@@ -79,11 +81,38 @@ public class callbackHandle {
 				JOptionPane.showMessageDialog(FrameHolder.sMoneyFrame, "转账成功！", "提示", JOptionPane.OK_OPTION);
 			}else {
 				JOptionPane.showMessageDialog(FrameHolder.drawmoneyframe, "转账失败，请确定用户姓名是否正确或您的账户余额是否充足", "提示", JOptionPane.OK_OPTION);
+				
 			}
 			break;
 		case "UPDATEPASSWD": 
 			break;
+		case "OPERATION": 
+			if(split[1].equals("OK")){
+				String[] message=split[2].split(MessageUtil.OERATION_REGEX);
+				String[][] mess=new String[message.length][1];
+				for(int i=0;i<mess.length;i++)
+				{
+					mess[i][0]=message[i];
+					
+				}
+				if (FrameHolder.operationframe==null) {
+					OperationFrame operationFrame=new OperationFrame();
+					operationFrame.initTable(mess);
+					operationFrame.setVisible(true);
+				}else {
+					FrameHolder.operationframe.initTable(mess);
+					FrameHolder.operationframe.setVisible(true);
+				}
+				
+			}else {
+				JOptionPane.showMessageDialog(FrameHolder.drawmoneyframe, "转账失败，请确定用户姓名是否正确或您的账户余额是否充足", "提示", JOptionPane.OK_OPTION);
+			}
+			
+			break;
 		}
+		
+		
+			
 	}
 
 }

@@ -26,7 +26,6 @@ public class KeyHandle
 				while((len=socketChannel.read(bf))>0)
 				{
 					String sign=new String(bf.array(),0,len);
-					System.out.println("收到消息了");
 					callHandler.handle(sign);
 				}
 			} catch (IOException e) {

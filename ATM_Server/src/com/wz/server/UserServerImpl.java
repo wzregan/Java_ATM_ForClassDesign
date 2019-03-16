@@ -97,5 +97,9 @@ public class UserServerImpl implements UserServer {
 		return dao.queryBalanceByname(name);
 	}
 
+	public String getOperation(String username) {
+		return dao.getOperation(username);
+	}
+
 	
 }

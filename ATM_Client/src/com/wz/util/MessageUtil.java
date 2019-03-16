@@ -5,6 +5,8 @@ public class MessageUtil {
 	//client.sendMessage("LOGIN:#:#text0008:#:#woainima..");
 	//client.sendMessage("SAVAMONEY:#:#text03:#:#85615");
 	final public  static  String REGEX=":#:#"; //分隔符
+	final public  static  String OERATION_REGEX=";#;#"; //分隔符
+	
 	public static String loginSgin(String username,String passwd) //得到登陆信号
 	{
 		return "LOGIN"+REGEX+username+REGEX+passwd;
@@ -32,6 +34,11 @@ public class MessageUtil {
 	public static String updatepasswdSign(String username,String newpasswd)//得到修改密码信号
 	{
 		return "UPDATEPASSWD" +REGEX+username+REGEX+newpasswd;
+	}
+	
+	public static String querryOperationSign(String username)//得到修改密码信号
+	{
+		return "OPERATION" +REGEX+username;
 	}
 	
 }

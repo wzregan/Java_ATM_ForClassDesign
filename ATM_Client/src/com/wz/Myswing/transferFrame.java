@@ -8,6 +8,7 @@ import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.text.NumberFormat;
 
 import javax.swing.Box;
@@ -30,6 +31,11 @@ public class transferFrame extends JFrame implements ActionListener{
 	private JFormattedTextField money;
 	private JPasswordField passwordField;
 	private User user;
+	private WindowAdapter adapate=new WindowAdapter() {
+		public void windowClosing(java.awt.event.WindowEvent e) {
+			clear();
+		}; 
+	};
 	
 	public transferFrame(User user)
 	{
@@ -79,8 +85,8 @@ public class transferFrame extends JFrame implements ActionListener{
 		box4.add(button);
 		addBlankLine(1);
 		add(box4);
-		
 		button.addActionListener(this);
+		addWindowListener(adapate);
 		
 	}
 	private  void addBlankLine(int n)
