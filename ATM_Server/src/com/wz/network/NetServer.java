@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Properties;
 
 import com.wz.handle.KeyHandle;
+import com.wz.tool.timeUtil;
 
 //直接让父类继承Runable接口，待会要在run方法里实现accpet
 public class NetServer implements Runnable{
@@ -37,6 +38,7 @@ public class NetServer implements Runnable{
 			serversocketchannel.socket().bind(new InetSocketAddress(host, PORT)); //对通道所关联的socket进行绑定端口
 			serversocketchannel.configureBlocking(true); //将连接通道设置为阻塞模式
 			selector=Selector.open(); //创建一个选择器
+			System.out.println("***********服务器已经开启************");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -86,7 +88,6 @@ public class NetServer implements Runnable{
 				synchronized(this) {
 					selector.wakeup(); //此处需要唤醒server()方法中的select()，否则的话可能会发生死锁
 					socketchannel.register(selector,SelectionKey.OP_READ); //对这个通道注册读和写事件
-					System.out.println("接收到连接"); //测试代码
 				}
 				
 			} catch (IOException e) {

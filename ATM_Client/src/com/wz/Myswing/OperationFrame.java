@@ -23,6 +23,7 @@ public class OperationFrame extends JFrame{
 	public OperationFrame()
 	{
 		FrameHolder.operationframe=this;
+		setResizable(false);
 		init();
 	}
 	public void init()

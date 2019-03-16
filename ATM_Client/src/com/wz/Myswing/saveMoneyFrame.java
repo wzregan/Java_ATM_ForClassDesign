@@ -46,6 +46,7 @@ public class saveMoneyFrame extends JFrame implements ActionListener{
 	public saveMoneyFrame(User user) {
 		FrameHolder.sMoneyFrame=this; //添加到FrameHolder中
 		this.user=user;  //初始化user
+		setResizable(false);
 		init();
 	}
 	private void init()

@@ -41,6 +41,7 @@ public class MesFrame extends JFrame{
 		mespanel=new MessagePanel();
 		fp=new buttonPanel();
 		setSize(500, 300);
+		setResizable(false);
 		InitMouseAdapter();
 		init();
 	}

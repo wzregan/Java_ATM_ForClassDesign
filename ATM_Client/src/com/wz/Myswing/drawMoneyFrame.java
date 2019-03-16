@@ -39,6 +39,7 @@ public class drawMoneyFrame extends JFrame implements ActionListener{
 	public drawMoneyFrame(User user) {
 		FrameHolder.drawmoneyframe=this;
 		this.user=user;
+		setResizable(false);
 		setSize(250, 300);
 		init();
 	}

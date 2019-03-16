@@ -6,6 +6,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
 import com.wz.network.NetServer;
+import com.wz.tool.MyHolder;
+import com.wz.tool.timeUtil;
 
 /*SelectionKey处理器*/
 public class KeyHandle
@@ -37,6 +39,10 @@ public class KeyHandle
 				{
 					try 
 					{
+						if (MyHolder.getKeyList().contains(key)) {
+							MyHolder.getKeyList().remove(key);
+							System.out.println(timeUtil.getTime()+"     有用户离开系统,当前连接数:"+MyHolder.getKeyList().size()); //测试代码
+						}
 						key.cancel();
 						key.channel().close();
 					} 

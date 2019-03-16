@@ -12,30 +12,36 @@ import com.wz.tool.dbPool;
 public class UserDaoImpl implements UserDao {
 	private dbPool dbpool=new dbPool();
 	public void insert(String username, String passwd, String realname, double balance) {
-		
-		passwd=Md5Util.ToMd5code(passwd); //将密码转换一下
-		Connection con=dbpool.getConenction(); //得到连接
-		PreparedStatement ps=null;
-		//以下为插入操作
-		try {
-			ps=con.prepareStatement("insert into user values(null,?,?,?,?)");
-			ps.setString(1, username);
-			ps.setString(2, passwd);
-			ps.setString(3,realname);
-			ps.setDouble(4,balance);
-			ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+		synchronized (UserDaoImpl.class) { //写操作，需要注意线程安全
+			
+			passwd=Md5Util.ToMd5code(passwd); //将密码转换一下
+			Connection con=dbpool.getConenction(); //得到连接
+			PreparedStatement ps=null;
+			//以下为插入操作
 			try {
-				ps.close();
-				con.close();
+				ps=con.prepareStatement("insert into user values(null,?,?,?,?)");
+				ps.setString(1, username);
+				ps.setString(2, passwd);
+				ps.setString(3,realname);
+				ps.setDouble(4,balance);
+				ps.execute();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					ps.close();
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			
+			
 		}
+		
 	}
-	public void updatePasswd(String username, String newpasswd) {
+	
+	public void updatePasswd(String username, String newpasswd) { //暂时没有用到，不给与处理
 		Connection con=dbpool.getConenction(); //获取连接
 		newpasswd=Md5Util.ToMd5code(newpasswd); //将密码转换一下
 		PreparedStatement ps=null;
@@ -56,27 +62,34 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 	}
+	
+	
 	public void updatebalance(String username, double balance) {
-		Connection con=dbpool.getConenction(); //获取连接
-		PreparedStatement ps=null;
-		//以下为update语句更新余额
-		try {
-			ps=con.prepareStatement("update user set balance=? where username=?");
-			ps.setDouble(1, balance);
-			ps.setString(2, username);
-			ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+		synchronized (UserDaoImpl.class)  //写操作，需要注意线程安全
+		{
+			Connection con=dbpool.getConenction(); //获取连接
+			PreparedStatement ps=null;
+			//以下为update语句更新余额
 			try {
-				ps.close();
-				con.close();
+				ps=con.prepareStatement("update user set balance=? where username=?");
+				ps.setDouble(1, balance);
+				ps.setString(2, username);
+				ps.execute();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					ps.close();
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
+
 	}
 	public User querryMessage(String username, String passwd) {
+		//读操作，不考虑线程安全问题
 		Connection con=dbpool.getConenction();
 		passwd=Md5Util.ToMd5code(passwd);
 		ResultSet rs=null;
@@ -111,6 +124,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public boolean userIsExist(String username) {
+		//读操作，不考虑线程安全
 		Connection con=dbpool.getConenction();
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -136,8 +150,9 @@ public class UserDaoImpl implements UserDao {
 		
 		return isExist;
 	}
-	@Override
+	
 	public double queryBalanceByname(String name) {
+		//读操作，不考虑线程安全
 		Connection con=dbpool.getConenction();
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -168,6 +183,7 @@ public class UserDaoImpl implements UserDao {
 		return -100;
 	}
 	public String ToRealName(String username) {
+		//读操作，不考虑线程安全
 		Connection con=dbpool.getConenction();
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -196,6 +212,7 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	public String getOperation(String username) {
+		//读操作，不考虑线程安全
 		Connection connection=dbpool.getConenction();
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -218,11 +235,6 @@ public class UserDaoImpl implements UserDao {
 				}
 			
 			}
-	
-			
-		
-			
-		
 		return null;
 	}
 	

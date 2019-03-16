@@ -33,6 +33,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
 	
 	public RegisterFrame() {
 		setSize(300, 300);  //设置窗口大小
+		setResizable(false);
 		setTitle("登陆"); //设置标题
 		setLayout(new GridLayout(7, 0));
 		init();

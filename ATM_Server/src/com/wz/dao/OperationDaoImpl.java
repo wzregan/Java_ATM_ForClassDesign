@@ -6,9 +6,11 @@ import java.sql.SQLException;
 
 import com.wz.tool.dbPool;
 
-public class OperationDaoImpl implements com.wz.Interface.OperationDao {
+public class OperationDaoImpl implements com.wz.Interface.OperationDao 
+{
+	//此工具类的操作，总是与UseDao工具类里的操作相关联,处理好UseDao里的线程安全，这里也就没必要再处理了
+	
 	private dbPool db=new dbPool(); //获取数据库连接池
-
 	//这个方法在注册的时候调用，会为账号初始化一个operation
 	public void InitOperation(String username)
 	{

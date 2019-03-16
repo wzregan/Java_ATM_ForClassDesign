@@ -4,9 +4,10 @@ import com.wz.Interface.UserDao;
 import com.wz.Interface.UserServer;
 import com.wz.bean.User;
 import com.wz.dao.UserDaoImpl;
+import com.wz.tool.MyHolder;
 
 public class UserServerImpl implements UserServer {
-	UserDao dao=new UserDaoImpl();
+	UserDao dao=MyHolder.getUserDao();
 	public boolean register(User user) {
 		if(dao.userIsExist(user.getUsername()))
 		{

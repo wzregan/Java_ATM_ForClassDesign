@@ -41,6 +41,7 @@ public class transferFrame extends JFrame implements ActionListener{
 	{
 		FrameHolder.transferframe=this;
 		this.user=user;
+		setResizable(false);
 		init();
 	}
 	

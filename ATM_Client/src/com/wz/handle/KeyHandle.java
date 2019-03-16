@@ -30,6 +30,14 @@ public class KeyHandle
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+				if (socketChannel!=null) {
+					try {
+						ErrorHandle.sendMessage(ErrorHandle.InterruptError);
+						socketChannel.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
 		}
 		

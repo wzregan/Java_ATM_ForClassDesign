@@ -36,6 +36,7 @@ public class LogFrame extends JFrame implements ActionListener{
 		funcpanel=new funcPanel();
 		setTitle("登陆"); //设置标题
 		setSize(300, 300);  //设置窗口大小
+		setResizable(false);
 		setLayout(new GridLayout(7, 0));
 		addBlankLine(2);
 		init();
